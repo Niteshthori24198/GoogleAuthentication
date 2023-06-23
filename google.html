@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="handleGoogleSignIn()" id="niteshgoogleauth">Google</button>
+</body>
+
+</html>
+
+<script>
+
+
+
+    function handleGoogleSignIn() {
+
+        document.getElementById('niteshgoogleauth').innerHTML = `<i class="fa fa-refresh fa-spin"></i> Google`;
+        window.location.href = `http://localhost:3000/auth/google`;
+
+    }
+
+
+
+
+    let a = new URLSearchParams(window.location.search);
+
+    let tokenfromurl = a.get('token');
+
+    let userName = a.get('Name')
+
+    console.log(userName)
+
+    if (tokenfromurl) {
+
+        localStorage.setItem('usertoken', tokenfromurl);
+
+
+        var currentUrl = window.location.href;
+
+        if (currentUrl.indexOf('?token=') !== -1) {
+
+            var newUrl = currentUrl.replace(/(\?|&)token=[^&]*(&|$)/, '$1');
+
+            if(newUrl.indexOf('?Name=')!== -1){
+                newUrl = newUrl.replace(/(\?|&)Name=[^&]*(&|$)/, '$1')
+            }
+
+            history.replaceState(null, null, newUrl);
+        }
+
+    }
+
+
+
+</script>
